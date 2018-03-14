@@ -21,7 +21,7 @@ def get_scene_pose(scene):
 folder_convert = {'data': 'fold_0', 'data1': 'fold_1', 'data2': 'fold_2'}
 inv_folder_convert = {y:x for x, y in folder_convert.iteritems()}
 inv_folder_convert['fold_01'] = 'data1'
-newsavepath = '/home/michael/Dropbox/Public/voxlets/new_carved/'
+newsavepath = '../../new_carved/'
 
 # doing a loop here to loop over all possible files...
 def process_sequence(sequence):
@@ -29,13 +29,12 @@ def process_sequence(sequence):
     print "Considering", sequence['folder']
     
     # hack to convert between old and new folder names
-    old_folder = inv_folder_convert[sequence['folder'].split('/')[-2]]
-    newpath = ('/media/michael/Seagate/phd_projects/volume_completion_data'
-                '/data/oisin_house/' + old_folder + '/')
+    old_folder = sequence['folder'].split('/')[-2]
+    newpath = ('../../for_release_new/' + old_folder + '/')
     sequence['folder'] = newpath
     
     scene = sequence['folder'] + sequence['scene']
-    new_folder = folder_convert[sequence['folder'].split('/')[-2]]
+    new_folder = folder_convert[inv_folder_convert[old_folder]]
 
     this_dir = newsavepath + new_folder + '/' + sequence['scene']
     
@@ -56,7 +55,9 @@ def process_sequence(sequence):
 
     print "Processing ", scene
     vid = images.RGBDVideo()
-    vid.load_from_yaml(scene + '/poses.yaml')
+    filenames = os.listdir(scene+ '/poses')
+    print "file names : ", filenames[0]
+    vid.load_from_yaml(scene + '/poses/' + filenames[0])
     print "WARNING" * 20
     vid.frames = vid.frames
 
@@ -81,7 +82,7 @@ def process_sequence(sequence):
 
     print "Saving...", scene
     print vox.V.dtype
-    print visible.V.dtype
+    #print visible.V.dtype
     print in_frustrum.V.dtype
 
     print this_dir + '/ground_truth_tsdf.dat'

@@ -304,7 +304,7 @@ class RGBDImage(object):
             mask_image_path = os.path.join(scene_folder, dictionary['mask'])
         else:
             mask_image_path = \
-                scene_folder + '/frames/mask_%s.png' % dictionary['id']
+                scene_folder + '/../frames/mask_%s.png' % dictionary['id']
             mask_image_path2 = \
                 scene_folder + '/images/mask_%s.png' % dictionary['id']
 
@@ -403,7 +403,9 @@ class RGBDVideo():
         # get the folder in which the yaml file resides...
         # (paths in the yaml file are defined relative to this dir)
         folderpath = os.path.dirname(yamlpath)
-        self.frames = [RGBDImage.load_from_dict(folderpath, frame)
+        frame_data['rgb'] = '../' + frame_data['rgb']
+        frame_data['image'] = '../' + frame_data['image']
+        self.frames = [RGBDImage.load_from_dict(folderpath, frame_data)
                         for frame in frame_data]
 
     def play(self, fps=2.0):

@@ -4,3 +4,5 @@ data_nyu/
 .ipynb_checkpoints/
 *.pyc
 *.dylib
+
+\.idea/
