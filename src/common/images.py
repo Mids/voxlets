@@ -304,7 +304,7 @@ class RGBDImage(object):
             mask_image_path = os.path.join(scene_folder, dictionary['mask'])
         else:
             mask_image_path = \
-                scene_folder + '/../frames/mask_%s.png' % dictionary['id']
+                scene_folder + '/frames/mask_%s.png' % dictionary['id']
             mask_image_path2 = \
                 scene_folder + '/images/mask_%s.png' % dictionary['id']
 
